@@ -17,26 +17,40 @@ pDoente doente_criar() {
 void doente_carregar(pDoente raiz) {
     FILE *ficheiro = fopen("doentes.txt", "r");
     if (ficheiro == NULL) {
+        printf("Não há ficheiro com doentes\n");
         return;
     }
+    
     Doente doente;
+
+    int i = 1;
     while (fscanf(ficheiro, "%d ", &doente.id)) { 
+        printf("Lendo linha %d...\n", i);
         if (fgets(doente.nome, 50, ficheiro) == NULL) break;
         doente.nome[strcspn(doente.nome, "\n")] = '\0';
+        i++;
+        printf("Lendo linha %d...\n", i);
         if (fgets(doente.data, 50, ficheiro) == NULL) break;
         doente.data[strcspn(doente.data, "\n")] = '\0';
+        i++;
+        printf("Lendo linha %d...\n", i);
         if (fgets(doente.cc, 14, ficheiro) == NULL) break;
         doente.cc[strcspn(doente.cc, "\n")] = '\0';
+        i++;
+        printf("Lendo linha %d...\n", i);
         fscanf(ficheiro, "%d ", &doente.telefone);
         if (fgets(doente.email, 50, ficheiro) == NULL) break;
         doente.email[strcspn(doente.email, "\n")] = '\0';
-        doente_insere(raiz, doente, 0);
+        i++;
+        printf("Lendo linha %d...\n", i);
+
+        doente_insere(raiz, doente);
+
         printf("\nDoente carregado: %s\n", doente.nome);
-            
     }
-    if (fclose(ficheiro) != 0) {
-        printf("Erro ao fechar o ficheiro!\n");
-    }
+
+    if (fclose(ficheiro) != 0) printf("Erro ao fechar o ficheiro!\n");
+    printf("Doentes carregados...\n");
 }
 
 void doente_destroi(pDoente raiz) {
@@ -56,7 +70,9 @@ int doente_vazia(pDoente raiz) {
 void doente_procura(pDoente raiz, size_tt id, pDoente *anterior, pDoente *atual) {
     *anterior = raiz;
     *atual = raiz->prox;
+    // esta merda nunca acaba
     while ((*anterior) != NULL && (*anterior)->doente.id < id) {
+        printf("anterior: %p\tatual: %p\n", anterior, atual); // para debug
         *anterior = *anterior;
         *atual = (*anterior)->prox;
     }
@@ -65,28 +81,23 @@ void doente_procura(pDoente raiz, size_tt id, pDoente *anterior, pDoente *atual)
     }
 }
 
-void doente_insere(pDoente raiz, Doente doente, int novo) {
-    pDoente no, anterior, inutil;
-    no = (pDoente)malloc(sizeof(noDoente));
-    if (no != NULL) {
-        doente_procura(raiz, doente.id, &anterior, &inutil);
-        doente.id = anterior->doente.id+1;
-        no->doente = doente;
-        no->prox = anterior->prox;
-        anterior->prox = no;
+void doente_insere(pDoente raiz, Doente doente) {
+    pDoente novo, ant, inutil;
+
+    novo = (pDoente)malloc(sizeof(noDoente));
+    
+    if (novo != NULL) {
+        doente_procura(raiz, doente.id, &ant, &inutil);
+
+        doente.id = ant->doente.id+1;
+
+        novo->doente = doente;
+        novo->prox = ant->prox; 
+        ant->prox = novo; 
+
         printf("O doente foi adicionado!\n");
-    }
-    if (novo) {
-      FILE *ficheiro;
-      ficheiro = fopen("doentes.txt", "a");
-      if (ficheiro == NULL) {
-        printf("Erro ao abrir o ficheiro!\n");
-        return;
-      }
-      fprintf(ficheiro, "%d\n%s\n%s\n%s\n%d\n%s\n", doente.id, doente.nome, doente.data, doente.cc, doente.telefone, doente.email);
-      if (fclose(ficheiro)) {
-        printf("Erro ao fechar o ficheiro!\n");
-      }
+    } else {
+        printf("Não há mais memória.");
     }
 }
 

@@ -16,7 +16,7 @@ all: install
 
 install: 
 	@echo "Checking.."
-	${CC} ${FLAGS} ${SRCS} -o out
+	${CC} ${FLAGS} ${SRCS} -o out 2>log
 
 clean:
 	@echo "Cleaning up..."
