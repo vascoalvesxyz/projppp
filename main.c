@@ -7,15 +7,15 @@
 
 int main() {
     pDoente doentes = doente_criar();
-    printf("Carregando doentes...\n");
     doente_carregar(doentes);
-    printf("Carregando registo...\n");
     pRegisto registos = registo_criar();
     registo_carregar(registos);
     char input, clr;
+
     while (input != 'Q') {
         printf("Escolha uma opção:\n  A) Introduzir dados de um novo doente\n  B) Eliminar um doente existente\n  C) Listar todos os doentes por ordem alfabética\n  D) Listar os doentes com tensões máximas acima de um determinado valor (por ordem decrescente das mesmas)\n  E) Apresentar toda a informação de um determinado doente\n  F) Registar as tensões, o peso e a altura de um determinado doente num determinado dia\n  Q) Sair do programa\n");
         scanf("%c", &input);
+
         switch (input) {
             case 'A': {
                           Doente doente;
@@ -44,8 +44,7 @@ int main() {
                           doente_retira(doentes, id);
                           break;
                       }
-            case 'C': {
-                          printf("Lista de doentes por ordem alfabética:\n");
+            case 'C': { printf("Lista de doentes por ordem alfabética:\n");
                           doente_listar_todos(doentes);
                           break;
                       }
@@ -92,5 +91,8 @@ int main() {
     free(registos);
     doente_destroi(doentes);
     free(doentes);
+
+    exit(0);
+
     return 0;
 }

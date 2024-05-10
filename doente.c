@@ -25,24 +25,17 @@ void doente_carregar(pDoente raiz) {
 
     int i = 1;
     while (fscanf(ficheiro, "%d ", &doente.id)) { 
-        printf("Lendo linha %d...\n", i);
         if (fgets(doente.nome, 50, ficheiro) == NULL) break;
         doente.nome[strcspn(doente.nome, "\n")] = '\0';
-        i++;
         printf("Lendo linha %d...\n", i);
         if (fgets(doente.data, 50, ficheiro) == NULL) break;
         doente.data[strcspn(doente.data, "\n")] = '\0';
-        i++;
         printf("Lendo linha %d...\n", i);
         if (fgets(doente.cc, 14, ficheiro) == NULL) break;
         doente.cc[strcspn(doente.cc, "\n")] = '\0';
-        i++;
-        printf("Lendo linha %d...\n", i);
         fscanf(ficheiro, "%d ", &doente.telefone);
         if (fgets(doente.email, 50, ficheiro) == NULL) break;
         doente.email[strcspn(doente.email, "\n")] = '\0';
-        i++;
-        printf("Lendo linha %d...\n", i);
 
         doente_insere(raiz, doente);
 
@@ -50,7 +43,7 @@ void doente_carregar(pDoente raiz) {
     }
 
     if (fclose(ficheiro) != 0) printf("Erro ao fechar o ficheiro!\n");
-    printf("Doentes carregados...\n");
+    printf("Todos os doentes forma carregados!\n");
 }
 
 void doente_destroi(pDoente raiz) {
@@ -75,6 +68,7 @@ void doente_procura(pDoente raiz, size_tt id, pDoente *anterior, pDoente *atual)
         printf("anterior: %p\tatual: %p\n", anterior, atual); // para debug
         *anterior = *anterior;
         *atual = (*anterior)->prox;
+        if (*anterior == raiz) break;
     }
     if ((*anterior) != NULL && (*anterior)->doente.id != id) {
       *atual = NULL;
@@ -85,9 +79,10 @@ void doente_insere(pDoente raiz, Doente doente) {
     pDoente novo, ant, inutil;
 
     novo = (pDoente)malloc(sizeof(noDoente));
-    
+
     if (novo != NULL) {
         doente_procura(raiz, doente.id, &ant, &inutil);
+
 
         doente.id = ant->doente.id+1;
 
@@ -96,6 +91,7 @@ void doente_insere(pDoente raiz, Doente doente) {
         ant->prox = novo; 
 
         printf("O doente foi adicionado!\n");
+
     } else {
         printf("Não há mais memória.");
     }
