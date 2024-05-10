@@ -34,7 +34,8 @@ int main() {
                           doente.data[strlen(doente.data)-1] = '\0';
                           printf("Insira o número de telefone do doente: ");
                           scanf("%d",&doente.telefone);
-                          doente_insere(doentes, doente);
+
+                          doente_insere(doentes, doente, TRUE);
                           break;
                       }
             case 'B': {
@@ -87,6 +88,9 @@ int main() {
         }
         scanf("%c", &clr);
     }
+
+    doentes_update_ficheiro(doentes);
+
     registo_destroi(registos);
     free(registos);
     doente_destroi(doentes);
