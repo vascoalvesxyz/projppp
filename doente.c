@@ -55,7 +55,7 @@ void doente_guardar(pDoente raiz) {
   pDoente aux = raiz->prox;
   while (aux != NULL) {
     Doente doente = aux->doente;
-    fprintf(ficheiro, "\n%d\n%s\n%s\n%s\n%d\n%s", doente.id, doente.nome, doente.data, doente.cc, doente.telefone, doente.email);
+    fprintf(ficheiro, "%d\n%s\n%s\n%s\n%d\n%s\n", doente.id, doente.nome, doente.data, doente.cc, doente.telefone, doente.email);
     printf("Doente escrito: %s\n", doente.nome);      
     aux = aux->prox;
   }
@@ -90,21 +90,27 @@ void doente_procura(pDoente raiz, size_tt id, pDoente *anterior, pDoente *atual)
   }
 }
 
-int doente_obter_id(pDoente raiz) {
+size_tt doente_obter_id(pDoente raiz) {
   pDoente aux = raiz->prox;
-  if (aux->doente.id+1 < aux->prox->doente.id) {
-    return aux->doente.id+1;
+  while (aux->prox != NULL) {
+    if ((aux->doente.id)+1 < aux->prox->doente.id) {
+      return (aux->doente.id)+1;
+    }
+    aux = aux->prox;
   }
+  return (aux->doente.id)+1;
 }
 
 void doente_insere(pDoente raiz, Doente doente) {
   pDoente no, anterior, inutil;
   no = (pDoente)malloc(sizeof(noDoente));
   if (no != NULL) {
-    doente_procura(raiz, doente.id, &anterior, &inutil);
     if (doente.id == 0) {
-      doente.id = (anterior->doente.id)+1;
+      printf("A obter novo id\n");
+      doente.id = doente_obter_id(raiz);
+      printf("Novo id obtido: %d\n", doente.id);
     }
+    doente_procura(raiz, doente.id, &anterior, &inutil);
     no->doente = doente;
     no->prox = anterior->prox;
     anterior->prox = no;
