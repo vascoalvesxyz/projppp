@@ -16,16 +16,8 @@ all: install
 
 install: 
 	@echo "Checking.."
-	${CC} ${FLAGS} ${SRCS} -o out 2>log
+	${CC} ${FLAGS} ${SRCS} -o out
 
 clean:
 	@echo "Cleaning up..."
 	rm -rvf *.o ${BINS}
-
-patch:
-	echo "Creating patch file"
-	for file in ./*.orig; do
-		basename="${file%.*}";
-		echo "> exec: diff $basename.orig $basename";
-		diff -u "$basename.orig" "$basename" >> "patch-$(date +%d%m%Y)"
-	done
