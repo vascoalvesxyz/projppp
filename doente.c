@@ -1,6 +1,8 @@
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <strings.h>
 #include "doente.h"
 
 pDoente doente_criar() {
@@ -10,6 +12,7 @@ pDoente doente_criar() {
   if (aux != NULL) {
     aux->doente = doente;
     aux->prox = NULL;
+    aux->prox_alfabetica = NULL;
   }
   return aux;
 }
@@ -92,6 +95,18 @@ void doente_procura(pDoente raiz, size_tt id, pDoente *anterior, pDoente *atual)
   }
 }
 
+void doente_procura_alfabetica(pDoente raiz, char *nome, pDoente *anterior, pDoente *atual) {
+  *anterior = raiz;
+  *atual = raiz->prox_alfabetica;
+  while ((*atual) != NULL && strcasecmp((*atual)->doente.nome, nome) < 0) {
+    *anterior = *atual;
+    *atual = (*atual)->prox_alfabetica;
+  }
+  if ((*atual) != NULL && strcasecmp((*atual)->doente.nome, nome) != 0) {
+    *atual = NULL;
+  }
+}
+
 size_tt doente_obter_id(pDoente raiz) {
   pDoente aux = raiz->prox;
   while (aux->prox != NULL) {
@@ -104,7 +119,7 @@ size_tt doente_obter_id(pDoente raiz) {
 }
 
 void doente_insere(pDoente raiz, Doente doente) {
-  pDoente no, anterior, inutil;
+  pDoente no, anterior, inutil, anterior_alfabetica, inutil_alfabetica;
   no = (pDoente)malloc(sizeof(noDoente));
   if (no != NULL) {
     if (doente.id == 0) {
@@ -116,6 +131,9 @@ void doente_insere(pDoente raiz, Doente doente) {
     no->doente = doente;
     no->prox = anterior->prox;
     anterior->prox = no;
+    doente_procura_alfabetica(raiz, doente.nome, &anterior_alfabetica, &inutil_alfabetica);
+    no->prox_alfabetica = anterior_alfabetica->prox_alfabetica;
+    anterior_alfabetica->prox_alfabetica = no;
   }
 }
 
@@ -142,9 +160,9 @@ void doente_info(pDoente raiz, size_tt id) {
 }
 
 void doente_listar_ordem_alfabetica(pDoente raiz) {
-  pDoente aux = raiz->prox;
+  pDoente aux = raiz->prox_alfabetica;
   while (aux) {
     printf("Doente: %s ID: %d\n", aux->doente.nome, aux->doente.id);
-    aux = aux->prox;
+    aux = aux->prox_alfabetica;
   }
 }

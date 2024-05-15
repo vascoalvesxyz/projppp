@@ -9,7 +9,7 @@
 
 #define TAM_EMAIL 255
 #define TAM_NOME 255
-#define TAM_CC 15
+#define TAM_CC 16
 
 typedef struct Doente {
   char nome[TAM_EMAIL];
@@ -23,7 +23,8 @@ typedef struct Doente {
 typedef struct noDoente {
   struct Doente doente;
   struct noDoente* prox;
-} noDoente ;
+  struct noDoente* prox_alfabetica;
+} noDoente;
 
 typedef struct noDoente* pDoente;
 

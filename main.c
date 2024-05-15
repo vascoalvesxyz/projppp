@@ -26,27 +26,24 @@ int main() {
           printf("Nome inválido! Tente novamente: ");
           fgets(doente.nome, TAM_NOME, stdin);
         } 
-        doente.nome[strlen(doente.nome)-1] = '\0';
         printf("Insira o email do doente: ");
         fgets(doente.email, TAM_EMAIL, stdin);
         while (!validar_email(doente.email)) {
           printf("Email inválido! Tente novamente: ");
           fgets(doente.email, TAM_EMAIL, stdin);
         } 
-        doente.email[strlen(doente.email)-1] = '\0';
         printf("Insira o cartão de cidadão do doente: ");
         fgets(doente.cc, TAM_CC, stdin);
         while (!validar_cc(doente.cc)) {
-          printf("Cartão de cidadão inválido! Tente novmente: ");
+          printf("Cartão de cidadão inválido! Tente novamente: ");
           fgets(doente.cc, TAM_CC, stdin);
         } 
-        doente.cc[strlen(doente.cc)-1] = '\0';
         printf("Insira a data de nascimento do doente.\n");
         ler_data(&doente.data);
         printf("Insira o número de telefone do doente: ");
         scanf("%d",&doente.telefone);
         while (!validar_telefone(doente.telefone)) {
-          printf("Número de telefone inválido! Tente novmente: ");
+          printf("Número de telefone inválido! Tente novamente: ");
           scanf("%d",&doente.telefone);
         } 
         doente_insere(doentes, doente);
