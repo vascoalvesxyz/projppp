@@ -5,12 +5,11 @@
  * Peso
  * Altura 
 */
-
-typedef unsigned int size_tt ; 
+#include "tipos.h"
 
 typedef struct Registo {
     size_tt id;
-    char* data; 
+    Data data; 
     double tensao_minima;
     double tensao_maxima;
     double peso;
@@ -25,11 +24,12 @@ typedef struct noRegisto{
 typedef noRegisto* pRegisto;
 
 pRegisto registo_criar(); 
-void registo_carregar(pRegisto r);
-void registo_destroi(pRegisto r); 
-int registo_vazia(pRegisto r); 
-void registo_insere(pRegisto r, Registo registo); 
-void registo_listar_tensoes_max(pRegisto r, int n); 
-void registo_listar_doente(pRegisto r, size_tt id);
+void registo_carregar(pRegisto raiz);
+void registo_guardar(pRegisto raiz);
+void registo_destroi(pRegisto raiz); 
+int registo_vazia(pRegisto raiz); 
+void registo_insere(pRegisto raiz, Registo registo); 
+void registo_listar_tensoes_max(pRegisto raiz, int n); 
+void registo_listar_doente(pRegisto raiz, size_tt id);
 
 

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "tipos.h"
 #include "doente.h"
 #include "registo.h"
 
@@ -11,8 +12,7 @@ int main() {
   pRegisto registos = registo_criar();
   registo_carregar(registos);
   char input, clr;
-  int done = 0;
-  while (!done) {
+  while (input != 'Q') {
     printf("Escolha uma opção:\n  A) Introduzir dados de um novo doente\n  B) Eliminar um doente existente\n  C) Listar todos os doentes por ordem alfabética\n  D) Listar os doentes com tensões máximas acima de um determinado valor (por ordem decrescente das mesmas)\n  E) Apresentar toda a informação de um determinado doente\n  F) Registar as tensões, o peso e a altura de um determinado doente num determinado dia\n  Q) Sair do programa\n");
     scanf("%c", &input);
     switch (input) {
@@ -21,20 +21,36 @@ int main() {
         doente.id = 0;
         printf("Insira o nome do doente: ");
         scanf("%c", &clr);
-        fgets(doente.nome, 50, stdin);
+        fgets(doente.nome, TAM_NOME, stdin);
+        while (!validar_nome(doente.nome)) {
+          printf("Nome inválido! Tente novamente: ");
+          fgets(doente.nome, TAM_NOME, stdin);
+        } 
         doente.nome[strlen(doente.nome)-1] = '\0';
         printf("Insira o email do doente: ");
-        fgets(doente.email, 50, stdin);
+        fgets(doente.email, TAM_EMAIL, stdin);
+        while (!validar_email(doente.email)) {
+          printf("Email inválido! Tente novamente: ");
+          fgets(doente.email, TAM_EMAIL, stdin);
+        } 
         doente.email[strlen(doente.email)-1] = '\0';
         printf("Insira o cartão de cidadão do doente: ");
-        fgets(doente.cc, 14, stdin);
+        fgets(doente.cc, TAM_CC, stdin);
+        while (!validar_cc(doente.cc)) {
+          printf("Cartão de cidadão inválido! Tente novmente: ");
+          fgets(doente.cc, TAM_CC, stdin);
+        } 
         doente.cc[strlen(doente.cc)-1] = '\0';
-        printf("Insira a data de nascimento do doente: ");
-        fgets(doente.data, 50, stdin);
-        doente.data[strlen(doente.data)-1] = '\0';
+        printf("Insira a data de nascimento do doente.\n");
+        ler_data(&doente.data);
         printf("Insira o número de telefone do doente: ");
         scanf("%d",&doente.telefone);
+        while (!validar_telefone(doente.telefone)) {
+          printf("Número de telefone inválido! Tente novmente: ");
+          scanf("%d",&doente.telefone);
+        } 
         doente_insere(doentes, doente);
+        doente_guardar(doentes);
         break;
       }
       case 'B': {
@@ -42,11 +58,12 @@ int main() {
         printf("Insira o ID do doente que pretende eliminar: ");
         scanf("%d", &id);
         doente_retira(doentes, id);
+        doente_guardar(doentes);
         break;
       }
       case 'C': {
         printf("Lista de doentes por ordem alfabética:\n");
-        doente_listar_todos(doentes);
+        doente_listar_ordem_alfabetica(doentes);
         break;
       }
       case 'D': {
@@ -69,10 +86,10 @@ int main() {
 
       case 'F': {
         Registo registo;
-        printf("Insira a data do registo: ");
-        char* data = malloc(50*sizeof(char)); 
-        fgets(data, 50, stdin);
-        registo.data = data;
+        printf("Insira o ID do doente deste registo: ");
+        scanf("%d", &registo.id);
+        printf("Insira a data do registo.\n");
+        ler_data(&registo.data);
         printf("Insira a tensão mínima do doente: ");
         scanf("%lf",&registo.tensao_minima);
         printf("Insira a tensão máxima do doente: ");
@@ -83,11 +100,7 @@ int main() {
         scanf("%lf",&registo.altura);
         printf("O registo foi adicionado!\n");
         registo_insere(registos, registo);
-        break;
-      }
-      case 'Q': {
-        doente_guardar(doentes);
-        done = 1;
+        registo_guardar(registos);
         break;
       }
     }

@@ -5,7 +5,7 @@
 
 pDoente doente_criar() {
   pDoente aux;
-  Doente doente = { "", 0, "", "", "", 0 };
+  Doente doente = { "", 0, "", "", {0, 0, 0,} , 0 };
   aux = (pDoente)malloc(sizeof(noDoente));
   if (aux != NULL) {
     aux->doente = doente;
@@ -28,9 +28,11 @@ void doente_carregar(pDoente raiz) {
     if (fgets(doente.nome, 50, ficheiro) == NULL) break;
     doente.nome[strcspn(doente.nome, "\n")] = '\0';
     printf("Nome: %s\n", doente.nome);
-    if (fgets(doente.data, 50, ficheiro) == NULL) break;
-    doente.data[strcspn(doente.data, "\n")] = '\0';
-    printf("Data: %s\n", doente.data);
+    char data_text[12];
+    if (fgets(data_text, 12, ficheiro) == NULL) break;
+    Data dt = {atoi(strtok(data_text, "/")), atoi(strtok(NULL, "/")), atoi(strtok(NULL, "/"))};
+    doente.data = dt;
+    printf("Data: %d/%d/%d\n", doente.data.dia, doente.data.mes, doente.data.ano);
     if (fgets(doente.cc, 15, ficheiro) == NULL) break;
     doente.cc[strcspn(doente.cc, "\n")] = '\0';
     printf("CC: %s\n", doente.cc);
@@ -55,7 +57,7 @@ void doente_guardar(pDoente raiz) {
   pDoente aux = raiz->prox;
   while (aux != NULL) {
     Doente doente = aux->doente;
-    fprintf(ficheiro, "%d\n%s\n%s\n%s\n%d\n%s\n", doente.id, doente.nome, doente.data, doente.cc, doente.telefone, doente.email);
+    fprintf(ficheiro, "%d\n%s\n%d/%d/%d\n%s\n%d\n%s\n", doente.id, doente.nome, doente.data.dia, doente.data.mes, doente.data.ano, doente.cc, doente.telefone, doente.email);
     printf("Doente escrito: %s\n", doente.nome);      
     aux = aux->prox;
   }
@@ -136,10 +138,10 @@ void doente_info(pDoente raiz, size_tt id) {
     return;
   }
   Doente doente = atual->doente;
-  printf("Nome: %s\nID: %d\nEmail: %s\nNúmero de cartão de cidadão: %s\nData de nascimento: %s\nNúmero de telefone: %d\n", doente.nome, doente.id, doente.email, doente.cc, doente.data, doente.telefone);
+  printf("Nome: %s\nID: %d\nEmail: %s\nNúmero de cartão de cidadão: %s\nData de nascimento: %d/%d/%d\nNúmero de telefone: %d\n", doente.nome, doente.id, doente.email, doente.cc, doente.data.dia, doente.data.mes, doente.data.ano, doente.telefone);
 }
 
-void doente_listar_todos(pDoente raiz) {
+void doente_listar_ordem_alfabetica(pDoente raiz) {
   pDoente aux = raiz->prox;
   while (aux) {
     printf("Doente: %s ID: %d\n", aux->doente.nome, aux->doente.id);
