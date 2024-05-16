@@ -22,31 +22,30 @@ void doente_carregar(pDoente raiz) {
   if (ficheiro == NULL) {
     return;
   }
+  int clr;
   Doente doente;
-  do {
-    fscanf(ficheiro, "%d", &doente.id);
-    printf("ID: %d\n", doente.id);
-    int clr;
+  while (fscanf(ficheiro, "%d", &doente.id) == 1) {
     fscanf(ficheiro, "%d", &clr);
-    if (fgets(doente.nome, 50, ficheiro) == NULL) break;
+    printf("ID: %d\n", doente.id);
+    fgets(doente.nome, TAM_NOME, ficheiro);
     doente.nome[strcspn(doente.nome, "\n")] = '\0';
     printf("Nome: %s\n", doente.nome);
-    char data_text[12];
-    if (fgets(data_text, 12, ficheiro) == NULL) break;
+    char data_text[14];
+    fgets(data_text, 14, ficheiro);
     Data dt = {atoi(strtok(data_text, "/")), atoi(strtok(NULL, "/")), atoi(strtok(NULL, "/"))};
     doente.data = dt;
-    printf("Data: %d/%d/%d\n", doente.data.dia, doente.data.mes, doente.data.ano);
-    if (fgets(doente.cc, 15, ficheiro) == NULL) break;
+    printf("Dia: %d Mês: %d Ano: %d\n", doente.data.dia, doente.data.mes, doente.data.ano);
+    fgets(doente.cc, TAM_CC, ficheiro);
     doente.cc[strcspn(doente.cc, "\n")] = '\0';
     printf("CC: %s\n", doente.cc);
-    if (fscanf(ficheiro, "%d ", &doente.telefone)==0) break;
+    fscanf(ficheiro, "%d", &doente.telefone);
     printf("Telefone: %d\n", doente.telefone);
-    if (fgets(doente.email, 50, ficheiro) == NULL) break;
+    fscanf(ficheiro, "%d", &clr);
+    fgets(doente.email, TAM_EMAIL, ficheiro);
     doente.email[strcspn(doente.email, "\n")] = '\0';
     printf("Email: %s\n", doente.email);
     doente_insere(raiz, doente);
-    printf("Doente carregado: %s %d\n", doente.nome, doente.id);      
-  } while (doente.id != 0); 
+  }
   if (fclose(ficheiro) != 0) {
     printf("Erro ao fechar o ficheiro!\n");
   }
@@ -166,3 +165,4 @@ void doente_listar_ordem_alfabetica(pDoente raiz) {
     aux = aux->prox_alfabetica;
   }
 }
+

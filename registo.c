@@ -20,20 +20,20 @@ void registo_carregar(pRegisto raiz) {
   if (ficheiro == NULL) {
     return;
   }
+  char clr;
   Registo registo;
-  do {
-    fscanf(ficheiro, "%d", &registo.id);
+  while (fscanf(ficheiro, "%d", &registo.id) == 1) {
+    fscanf(ficheiro, "%c", &clr);
     printf("ID: %d\n", registo.id);
-    int clr;
-    fscanf(ficheiro, "%d", &clr);
-    char data_text[12];
-    if (fgets(data_text, 12, ficheiro) == NULL) break;
+    char data_text[14];
+    if (fgets(data_text, 14, ficheiro) == NULL) break;
     Data dt = {atoi(strtok(data_text, "/")), atoi(strtok(NULL, "/")), atoi(strtok(NULL, "/"))};
     registo.data = dt;
-    scanf("%lf%lf%lf%lf", &registo.tensao_maxima, &registo.tensao_minima, &registo.peso, &registo.altura);
+    printf("Data: %d/%d/%d\n", registo.data.dia, registo.data.mes, registo.data.ano);
+    fscanf(ficheiro, "%lf%lf%lf%lf", &registo.tensao_maxima, &registo.tensao_minima, &registo.peso, &registo.altura);
     registo_insere(raiz, registo);
     printf("Registo carregado: %d\n", registo.id);      
-  } while (registo.id != 0); 
+  } ; 
   if (fclose(ficheiro) != 0) {
     printf("Erro ao fechar o ficheiro!\n");
   }
@@ -93,12 +93,26 @@ void registo_insere(pRegisto raiz, Registo registo) {
   }
 } 
 
-void registo_listar_tensoes_max(pRegisto raiz, int n) {
-  pRegisto temp_ptr = raiz;
+void registo_listar_tensoes_max(pDoente raiz_doente, pRegisto raiz, int n) {
+  int *done = calloc(10000, sizeof(int));
+  pRegisto temp_ptr = raiz->prox;
   while (temp_ptr != NULL && temp_ptr->registo.tensao_maxima >= n) {
-    printf("registo: %d\nTensão máxima:%lf\n", temp_ptr->registo.id, temp_ptr->registo.tensao_maxima);
+    if (!done[temp_ptr->registo.id]) {
+      done[temp_ptr->registo.id] = 1;
+      char nome[TAM_NOME];
+      pDoente aux = raiz_doente->prox;
+      while (aux) {
+        if (aux->doente.id == temp_ptr->registo.id) {
+          strcpy(nome, aux->doente.nome);
+          break;
+        }
+        aux = aux->prox;
+      }
+      printf("Doente: %s\nTensão máxima: %lf\n", nome, temp_ptr->registo.tensao_maxima);
+    }
     temp_ptr = temp_ptr->prox;
   }
+  free(done);
 } 
 
 void registo_listar_doente(pRegisto raiz, size_tt id) {

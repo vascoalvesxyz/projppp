@@ -67,7 +67,7 @@ int main() {
         int tensao;
         printf("Insira o valor de tensão mínimo pelo qual quer listar os doentes: ");
         scanf("%d", &tensao);
-        registo_listar_tensoes_max(registos, tensao);
+        registo_listar_tensoes_max(doentes, registos, tensao);
         break;
       }
       case 'E': {
