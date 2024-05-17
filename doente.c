@@ -166,3 +166,14 @@ void doente_listar_ordem_alfabetica(pDoente raiz) {
   }
 }
 
+Doente doente_id_para_doente(pDoente raiz, size_tt id) {
+  Doente doente = { "", 0, "", "", {0, 0, 0}, 0 };
+  pDoente aux = raiz->prox;
+  while (aux) {
+    if (aux->doente.id == id) {
+      doente = aux->doente;
+    }
+    aux = aux->prox;
+  }
+  return doente;
+}

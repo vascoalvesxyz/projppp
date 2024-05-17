@@ -13,10 +13,7 @@ typedef struct Data {
 typedef struct Registo {
   size_tt id;
   Data data; 
-  double tensao_minima;
-  double tensao_maxima;
-  double peso;
-  double altura;
+  double tensao_minima, tensao_maxima, peso, altura;
 } Registo;
 typedef struct noRegisto{
   struct Registo registo;
@@ -25,6 +22,7 @@ typedef struct noRegisto{
 typedef noRegisto* pRegisto;
 #endif
 
+// Doentes
 #ifndef DOENTES_H
 #define TAM_EMAIL 255
 #define TAM_NOME 255
@@ -46,6 +44,7 @@ typedef struct noDoente {
 typedef struct noDoente* pDoente;
 #endif
 
+void limpar_buffer();
 void ler_data(Data *data);
 int validar_email(char *input);
 int validar_nome(char *input);

@@ -1,4 +1,5 @@
 #include "registo.h"
+#include "doente.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -99,16 +100,9 @@ void registo_listar_tensoes_max(pDoente raiz_doente, pRegisto raiz, int n) {
   while (temp_ptr != NULL && temp_ptr->registo.tensao_maxima >= n) {
     if (!done[temp_ptr->registo.id]) {
       done[temp_ptr->registo.id] = 1;
-      char nome[TAM_NOME];
-      pDoente aux = raiz_doente->prox;
-      while (aux) {
-        if (aux->doente.id == temp_ptr->registo.id) {
-          strcpy(nome, aux->doente.nome);
-          break;
-        }
-        aux = aux->prox;
-      }
-      printf("Doente: %s\nTensão máxima: %lf\n", nome, temp_ptr->registo.tensao_maxima);
+      Doente doente = doente_id_para_doente(raiz_doente, temp_ptr->registo.id);
+      if (doente.id == 0) continue;
+      printf("Doente: %s\nTensão máxima: %.2f\n", doente.nome, temp_ptr->registo.tensao_maxima);
     }
     temp_ptr = temp_ptr->prox;
   }
@@ -116,14 +110,17 @@ void registo_listar_tensoes_max(pDoente raiz_doente, pRegisto raiz, int n) {
 } 
 
 void registo_listar_doente(pRegisto raiz, size_tt id) {
+  int sem_registos = 1;
   pRegisto temp_ptr = raiz;
   while (temp_ptr != NULL) {
     Registo registo_doente = temp_ptr->registo;
     if (registo_doente.id == id) {
-      printf("Data: %d/%d/%d\nPeso: %lf\nAltura: %lf\nTensão máxima: %lf\nTensão mínima: %lf\n", registo_doente.data.dia, registo_doente.data.mes, registo_doente.data.ano, registo_doente.peso, registo_doente.altura, registo_doente.tensao_maxima, registo_doente.tensao_minima);
-      return;
+      printf("Data: %d/%d/%d\nPeso: %.2f\nAltura: %.2f\nTensão máxima: %.2f\nTensão mínima: %.2f\n", registo_doente.data.dia, registo_doente.data.mes, registo_doente.data.ano, registo_doente.peso, registo_doente.altura, registo_doente.tensao_maxima, registo_doente.tensao_minima);
+      sem_registos = 0;
     }
     temp_ptr = temp_ptr->prox;
   }
-  printf("Esse doente não tem nenhum registo.\n");
+  if (sem_registos) {
+    printf("Este doente não tem nenhum registo.\n");
+  }
 }
