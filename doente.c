@@ -6,7 +6,7 @@
 
 pDoente doente_criar() {
   pDoente aux;
-  Doente doente = { "", 0, "", "", {0, 0, 0,} , 0 };
+  Doente doente = { "", 0, "", "", {0, 0, 0,} , 1 };
   aux = (pDoente)malloc(sizeof(noDoente));
   if (aux != NULL) {
     aux->doente = doente;
@@ -98,14 +98,7 @@ void doente_procura_alfabetica(pDoente raiz, char *nome, pDoente *anterior, pDoe
 }
 
 size_tt doente_obter_id(pDoente raiz) {
-  pDoente aux = raiz->prox;
-  while (aux->prox != NULL) {
-    if ((aux->doente.id)+1 < aux->prox->doente.id) {
-      return (aux->doente.id)+1;
-    }
-    aux = aux->prox;
-  }
-  return (aux->doente.id)+1;
+  return (raiz->doente.telefone)+1;
 }
 
 void doente_insere(pDoente raiz, Doente doente) {
@@ -122,6 +115,9 @@ void doente_insere(pDoente raiz, Doente doente) {
     doente_procura_alfabetica(raiz, doente.nome, &anterior_alfabetica, &inutil_alfabetica);
     no->prox_alfabetica = anterior_alfabetica->prox_alfabetica;
     anterior_alfabetica->prox_alfabetica = no;
+  }
+  if (doente.id > raiz->doente.telefone) {
+    raiz->doente.telefone = doente.id;
   }
 }
 

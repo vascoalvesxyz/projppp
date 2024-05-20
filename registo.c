@@ -78,6 +78,18 @@ void registo_procura(pRegisto raiz, int chave, pRegisto* anterior, pRegisto* atu
   }
 }
 
+void registo_procura_id(pRegisto raiz, size_tt id, pRegisto* anterior, pRegisto *atual) {
+  *anterior = raiz; 
+  *atual = raiz->prox;
+  while ((*atual) != NULL && (*atual)->registo.id < id) {
+    *anterior = *atual;
+    *atual = (*atual)->prox;
+  }
+  if ((*atual) != NULL && (*atual)->registo.id != id) {
+    *atual = NULL;
+  }
+}
+
 void registo_insere(pRegisto raiz, Registo registo) {
   pRegisto no, anterior, inutil;
   no = (pRegisto) malloc (sizeof (noRegisto));
@@ -88,6 +100,17 @@ void registo_insere(pRegisto raiz, Registo registo) {
     anterior->prox = no;
   }
 } 
+
+void registo_retira(pRegisto raiz, size_tt id) {
+  pRegisto atual, anterior;
+  registo_procura_id(raiz, id, &anterior, &atual);
+  if (atual == NULL) {
+    printf("Não existe nenhum registo com esse ID!\n");
+    return;
+  }
+  anterior->prox = atual->prox; 
+  free(atual); 
+}
 
 void registo_listar_tensoes_max(pDoente raiz_doente, pRegisto raiz, int n) {
   int *done = calloc(10000, sizeof(int));

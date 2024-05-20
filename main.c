@@ -55,6 +55,8 @@ int main() {
           printf("Doente não encontrado! Tente novamente: ");
         }
         printf("Doente %s eliminado!\n", doente_id_para_doente(doentes, id).nome);
+        registo_retira(registos, id);
+        registo_guardar(registos);
         doente_retira(doentes, id);
         doente_guardar(doentes);
         break;
