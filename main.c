@@ -18,7 +18,7 @@ int main() {
         Doente doente;
         doente.id = 0;
         printf("Insira o nome do doente: ");
-        limpar_buffer();
+        limpar_buffer(stdin);
         fgets(doente.nome, TAM_NOME, stdin);
         while (!validar_nome(doente.nome)) {
           printf("Nome inválido! Tente novamente: ");
@@ -40,7 +40,7 @@ int main() {
         ler_data(&doente.data);
         printf("Insira o número de telefone do doente: ");
         while (scanf("%d",&doente.telefone) != 1 || !validar_telefone(doente.telefone)) {
-          limpar_buffer();
+          limpar_buffer(stdin);
           printf("Número de telefone inválido! Tente novamente: ");
         } 
         doente_insere(doentes, doente);
@@ -51,7 +51,7 @@ int main() {
         int id;
         printf("Insira o ID do doente que pretende eliminar: ");
         while (scanf("%d", &id) != 1 || doente_id_para_doente(doentes, id).id == 0) {
-          limpar_buffer();
+          limpar_buffer(stdin);
           printf("Doente não encontrado! Tente novamente: ");
         }
         printf("Doente %s eliminado!\n", doente_id_para_doente(doentes, id).nome);
@@ -68,7 +68,7 @@ int main() {
         double tensao;
         printf("Insira o valor de tensão mínimo pelo qual quer listar os doentes: ");
         while (scanf("%lf", &tensao) != 1 || tensao <= 0 || tensao >= 200) {
-          limpar_buffer();
+          limpar_buffer(stdin);
           printf("Valor inválido! Tente novamente: ");
         }
         registo_listar_tensoes_max(doentes, registos, tensao);
@@ -78,7 +78,7 @@ int main() {
         int id;
         printf("Insira o ID do doente que pretende ver as informações: ");
         while (scanf("%d", &id) != 1 || doente_id_para_doente(doentes, id).id == 0) {
-          limpar_buffer();
+          limpar_buffer(stdin);
           printf("Doente não encontrado! Tente novamente: ");
         }
         printf("Informações do doente:\n");
@@ -92,29 +92,34 @@ int main() {
         Registo registo;
         printf("Insira o ID do doente deste registo: ");
         while (scanf("%d", &registo.id) != 1 || doente_id_para_doente(doentes, registo.id).id == 0) {
-          limpar_buffer();
+          limpar_buffer(stdin);
           printf("Doente não encontrado! Tente novamente: ");
         }
+        Doente doente = doente_id_para_doente(doentes, registo.id);
         printf("Insira a data do registo.\n");
         ler_data(&registo.data);
+        while (!registo_validar_data(registo.data, doente.data)) {
+          printf("Data inválida! Tente novamente.\n");
+          ler_data(&registo.data);
+        }
         printf("Insira a tensão mínima do doente: ");
         while (scanf("%lf", &registo.tensao_minima) != 1 || registo.tensao_minima <= 0 || registo.tensao_minima >= 200) {
-          limpar_buffer();
+          limpar_buffer(stdin);
           printf("Valor inválido! Tente novamente: ");
         }
         printf("Insira a tensão máxima do doente: ");
         while (scanf("%lf", &registo.tensao_maxima) != 1 || registo.tensao_maxima < registo.tensao_minima || registo.tensao_maxima >= 200) {
-          limpar_buffer();
+          limpar_buffer(stdin);
           printf("Valor inválido! Tente novamente: ");
         }
         printf("Insira o peso do doente: ");
         while (scanf("%lf", &registo.peso) != 1 || registo.peso <= 0 || registo.peso >= 500) {
-          limpar_buffer();
+          limpar_buffer(stdin);
           printf("Valor inválido! Tente novamente: ");
         }
         printf("Insira a altura do doente: ");
         while (scanf("%lf", &registo.altura) != 1 || registo.altura <= 0 || registo.altura >= 3) {
-          limpar_buffer();
+          limpar_buffer(stdin);
           printf("Valor inválido! Tente novamente: ");
         }
         printf("O registo foi adicionado!\n");
@@ -123,7 +128,7 @@ int main() {
         break;
       }
     }
-    limpar_buffer();
+    limpar_buffer(stdin);
   }
   registo_destroi(registos);
   doente_destroi(doentes);

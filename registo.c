@@ -21,19 +21,15 @@ void registo_carregar(pRegisto raiz) {
   if (ficheiro == NULL) {
     return;
   }
-  char clr;
   Registo registo;
   while (fscanf(ficheiro, "%d", &registo.id) == 1) {
-    fscanf(ficheiro, "%c", &clr);
-    printf("ID: %d\n", registo.id);
+    limpar_buffer(ficheiro);
     char data_text[14];
     if (fgets(data_text, 14, ficheiro) == NULL) break;
     Data dt = {atoi(strtok(data_text, "/")), atoi(strtok(NULL, "/")), atoi(strtok(NULL, "/"))};
     registo.data = dt;
-    printf("Data: %d/%d/%d\n", registo.data.dia, registo.data.mes, registo.data.ano);
     fscanf(ficheiro, "%lf%lf%lf%lf", &registo.tensao_maxima, &registo.tensao_minima, &registo.peso, &registo.altura);
     registo_insere(raiz, registo);
-    printf("Registo carregado: %d\n", registo.id);      
   } ; 
   if (fclose(ficheiro) != 0) {
     printf("Erro ao fechar o ficheiro!\n");
@@ -49,7 +45,6 @@ void registo_guardar(pRegisto raiz) {
   while (aux != NULL) {
     Registo registo = aux->registo;
     fprintf(ficheiro, "%d\n%d/%d/%d\n%lf\n%lf\n%lf\n%lf\n", registo.id, registo.data.dia, registo.data.mes, registo.data.ano, registo.tensao_maxima, registo.tensao_minima, registo.peso, registo.altura);
-    printf("Registo escrito: %d\n", registo.id);  
     aux = aux->prox;
   }
   if (fclose(ficheiro) != 0) {
@@ -123,4 +118,19 @@ void registo_listar_doente(pRegisto raiz, size_tt id) {
   if (sem_registos) {
     printf("Este doente não tem nenhum registo.\n");
   }
+}
+
+int registo_validar_data(Data d_registo, Data d_doente) {
+  if (d_registo.ano < d_doente.ano) {
+    return 0;
+  } else if (d_registo.ano == d_doente.ano) {
+    if (d_registo.mes < d_doente.mes) {
+      return 0;
+    } else if (d_registo.mes == d_doente.mes) {
+      if (d_registo.dia < d_doente.dia) {
+        return 0;
+      } 
+    }
+  }
+  return 1;
 }

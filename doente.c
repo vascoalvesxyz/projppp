@@ -1,4 +1,3 @@
-#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -22,28 +21,21 @@ void doente_carregar(pDoente raiz) {
   if (ficheiro == NULL) {
     return;
   }
-  int clr;
   Doente doente;
   while (fscanf(ficheiro, "%d", &doente.id) == 1) {
-    fscanf(ficheiro, "%d", &clr);
-    printf("ID: %d\n", doente.id);
+    limpar_buffer(ficheiro);
     fgets(doente.nome, TAM_NOME, ficheiro);
     doente.nome[strcspn(doente.nome, "\n")] = '\0';
-    printf("Nome: %s\n", doente.nome);
     char data_text[14];
     fgets(data_text, 14, ficheiro);
     Data dt = {atoi(strtok(data_text, "/")), atoi(strtok(NULL, "/")), atoi(strtok(NULL, "/"))};
     doente.data = dt;
-    printf("Dia: %d Mês: %d Ano: %d\n", doente.data.dia, doente.data.mes, doente.data.ano);
     fgets(doente.cc, TAM_CC, ficheiro);
     doente.cc[strcspn(doente.cc, "\n")] = '\0';
-    printf("CC: %s\n", doente.cc);
     fscanf(ficheiro, "%d", &doente.telefone);
-    printf("Telefone: %d\n", doente.telefone);
-    fscanf(ficheiro, "%d", &clr);
+    limpar_buffer(ficheiro);
     fgets(doente.email, TAM_EMAIL, ficheiro);
     doente.email[strcspn(doente.email, "\n")] = '\0';
-    printf("Email: %s\n", doente.email);
     doente_insere(raiz, doente);
   }
   if (fclose(ficheiro) != 0) {
@@ -60,7 +52,6 @@ void doente_guardar(pDoente raiz) {
   while (aux != NULL) {
     Doente doente = aux->doente;
     fprintf(ficheiro, "%d\n%s\n%d/%d/%d\n%s\n%d\n%s\n", doente.id, doente.nome, doente.data.dia, doente.data.mes, doente.data.ano, doente.cc, doente.telefone, doente.email);
-    printf("Doente escrito: %s\n", doente.nome);      
     aux = aux->prox;
   }
   if (fclose(ficheiro) != 0) {
@@ -122,9 +113,7 @@ void doente_insere(pDoente raiz, Doente doente) {
   no = (pDoente)malloc(sizeof(noDoente));
   if (no != NULL) {
     if (doente.id == 0) {
-      printf("A obter novo id\n");
       doente.id = doente_obter_id(raiz);
-      printf("Novo id obtido: %d\n", doente.id);
     }
     doente_procura(raiz, doente.id, &anterior, &inutil);
     no->doente = doente;

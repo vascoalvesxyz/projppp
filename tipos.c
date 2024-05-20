@@ -3,27 +3,27 @@
 #include <string.h>
 #include "tipos.h"
 
-void limpar_buffer() {
+void limpar_buffer(FILE *stream) {
   char clr;
   do {
-    clr = getchar();
+    clr = fgetc(stream);
   } while (clr != '\n' && clr != EOF);
 }
 
 void ler_data(Data *data) {
   printf("Insira o dia: ");
   while (scanf("%d", &data->dia) != 1 || data->dia>31 || data->dia <= 0) {
-    limpar_buffer();
+    limpar_buffer(stdin);
     printf("Dia inválido. Tente novamente: ");
   }
   printf("Insira o mês: ");
   while (scanf("%d", &data->mes) != 1 || data->mes>12 || data->mes <= 0) {
-    limpar_buffer();
+    limpar_buffer(stdin);
     printf("Mês inválido. Tente novamente: ");
   }
   printf("Insira o ano: ");
   while (scanf("%d", &data->ano) != 1 || data->ano > 2100 || data->ano < 1900 ) {
-    limpar_buffer();
+    limpar_buffer(stdin);
     printf("Ano inválido. Tente novamente: ");
   }
 }

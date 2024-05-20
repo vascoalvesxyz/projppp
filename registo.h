@@ -8,3 +8,4 @@ int registo_vazia(pRegisto raiz);
 void registo_insere(pRegisto raiz, Registo registo); 
 void registo_listar_tensoes_max(pDoente raiz_doente, pRegisto raiz, int n); 
 void registo_listar_doente(pRegisto raiz, size_tt id);
+int registo_validar_data(Data d_registo, Data d_doente);

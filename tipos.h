@@ -1,6 +1,7 @@
 // Comum
 #ifndef TIPOS_H
 #define TIPOS_H
+#include <stdio.h>
 typedef unsigned int size_tt; 
 typedef struct Data {
   int dia, mes, ano;
@@ -44,7 +45,7 @@ typedef struct noDoente {
 typedef struct noDoente* pDoente;
 #endif
 
-void limpar_buffer();
+void limpar_buffer(FILE *stream);
 void ler_data(Data *data);
 int validar_email(char *input);
 int validar_nome(char *input);
