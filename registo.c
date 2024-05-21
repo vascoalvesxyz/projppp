@@ -5,10 +5,8 @@
 #include <string.h>
 
 pRegisto registo_criar() {
-  pRegisto aux;
   Registo registo = { 0, {0, 0, 0} , 0, 0, 0, 0};
-  aux = (pRegisto) malloc (sizeof (noRegisto));
-
+  pRegisto aux = (pRegisto) malloc (sizeof (noRegisto));
   if (aux != NULL) {
     aux->registo = registo;
     aux->prox = NULL;
@@ -102,14 +100,16 @@ void registo_insere(pRegisto raiz, Registo registo) {
 } 
 
 void registo_retira(pRegisto raiz, size_tt id) {
-  pRegisto atual, anterior;
-  registo_procura_id(raiz, id, &anterior, &atual);
-  if (atual == NULL) {
-    printf("Não existe nenhum registo com esse ID!\n");
-    return;
+  pRegisto aux = raiz;
+  while (aux) {
+    if (aux->prox && aux->prox->registo.id == id) {
+      pRegisto temp = aux->prox;
+      aux->prox = aux->prox->prox;
+      free(temp);
+    } else {
+      aux = aux->prox;
+    }
   }
-  anterior->prox = atual->prox; 
-  free(atual); 
 }
 
 void registo_listar_tensoes_max(pDoente raiz_doente, pRegisto raiz, int n) {

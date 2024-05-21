@@ -5,9 +5,8 @@
 #include "doente.h"
 
 pDoente doente_criar() {
-  pDoente aux;
   Doente doente = { "", 0, "", "", {0, 0, 0,} , 1 };
-  aux = (pDoente)malloc(sizeof(noDoente));
+  pDoente aux = (pDoente)malloc(sizeof(noDoente));
   if (aux != NULL) {
     aux->doente = doente;
     aux->prox = NULL;
