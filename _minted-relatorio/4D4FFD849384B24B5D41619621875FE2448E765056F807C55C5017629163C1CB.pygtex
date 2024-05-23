@@ -1,0 +1,22 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{k}{typedef}\PYG{+w}{ }\PYG{k}{struct}\PYG{+w}{ }\PYG{n+nc}{Data}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{  }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{dia}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{mes}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{ano}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{n}{Data}\PYG{p}{;}
+
+\PYG{k}{typedef}\PYG{+w}{ }\PYG{k}{struct}\PYG{+w}{ }\PYG{n+nc}{Doente}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{  }\PYG{k+kt}{char}\PYG{+w}{ }\PYG{n}{nome}\PYG{p}{[}\PYG{n}{TAM\PYGZus{}EMAIL}\PYG{p}{];}
+\PYG{+w}{  }\PYG{n}{size\PYGZus{}tt}\PYG{+w}{ }\PYG{n}{id}\PYG{p}{;}
+\PYG{+w}{  }\PYG{k+kt}{char}\PYG{+w}{ }\PYG{n}{email}\PYG{p}{[}\PYG{n}{TAM\PYGZus{}EMAIL}\PYG{p}{];}
+\PYG{+w}{  }\PYG{k+kt}{char}\PYG{+w}{ }\PYG{n}{cc}\PYG{p}{[}\PYG{n}{TAM\PYGZus{}CC}\PYG{p}{];}
+\PYG{+w}{  }\PYG{n}{Data}\PYG{+w}{ }\PYG{n}{data}\PYG{p}{;}
+\PYG{+w}{  }\PYG{n}{size\PYGZus{}tt}\PYG{+w}{ }\PYG{n}{telefone}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{n}{Doente}\PYG{p}{;}
+
+\PYG{k}{typedef}\PYG{+w}{ }\PYG{k}{struct}\PYG{+w}{ }\PYG{n+nc}{noDoente}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{k}{struct}\PYG{+w}{ }\PYG{n+nc}{Doente}\PYG{+w}{ }\PYG{n}{doente}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{struct}\PYG{+w}{ }\PYG{n+nc}{noDoente}\PYG{o}{*}\PYG{+w}{ }\PYG{n}{prox}\PYG{p}{;}
+\PYG{+w}{    }\PYG{k}{struct}\PYG{+w}{ }\PYG{n+nc}{noDoente}\PYG{o}{*}\PYG{+w}{ }\PYG{n}{prox\PYGZus{}alfabetica}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{n}{noDoente}\PYG{+w}{ }\PYG{p}{;}
+
+
+\end{Verbatim}

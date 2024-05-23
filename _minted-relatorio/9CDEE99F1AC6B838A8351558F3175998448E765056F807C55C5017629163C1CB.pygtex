@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{n}{pRegisto}\PYG{+w}{ }\PYG{n+nf}{registo\PYGZus{}criar}\PYG{p}{();}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{registo\PYGZus{}carregar}\PYG{p}{(}\PYG{n}{pRegisto}\PYG{+w}{ }\PYG{n}{raiz}\PYG{p}{);}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{registo\PYGZus{}guardar}\PYG{p}{(}\PYG{n}{pRegisto}\PYG{+w}{ }\PYG{n}{raiz}\PYG{p}{);}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{registo\PYGZus{}destroi}\PYG{p}{(}\PYG{n}{pRegisto}\PYG{+w}{ }\PYG{n}{raiz}\PYG{p}{);}
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{registo\PYGZus{}vazia}\PYG{p}{(}\PYG{n}{pRegisto}\PYG{+w}{ }\PYG{n}{raiz}\PYG{p}{);}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{registo\PYGZus{}insere}\PYG{p}{(}\PYG{n}{pRegisto}\PYG{+w}{ }\PYG{n}{raiz}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Registo}\PYG{+w}{ }\PYG{n}{registo}\PYG{p}{);}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{registo\PYGZus{}retira}\PYG{p}{(}\PYG{n}{pRegisto}\PYG{+w}{ }\PYG{n}{raiz}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{size\PYGZus{}tt}\PYG{+w}{ }\PYG{n}{id}\PYG{p}{);}
+
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{registo\PYGZus{}procura}\PYG{p}{(}\PYG{n}{pRegisto}\PYG{+w}{ }\PYG{n}{raiz}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{chave}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{pRegisto}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{anterior}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{pRegisto}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{atual}\PYG{p}{);}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{registo\PYGZus{}procura\PYGZus{}id}\PYG{p}{(}\PYG{n}{pRegisto}\PYG{+w}{ }\PYG{n}{raiz}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{size\PYGZus{}tt}\PYG{+w}{ }\PYG{n}{id}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{pRegisto}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{anterior}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{pRegisto}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{atual}\PYG{p}{);}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{registo\PYGZus{}listar\PYGZus{}tensoes\PYGZus{}max}\PYG{p}{(}\PYG{n}{pDoente}\PYG{+w}{ }\PYG{n}{raiz\PYGZus{}doente}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{pRegisto}\PYG{+w}{ }\PYG{n}{raiz}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{n}\PYG{p}{);}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{registo\PYGZus{}listar\PYGZus{}doente}\PYG{p}{(}\PYG{n}{pRegisto}\PYG{+w}{ }\PYG{n}{raiz}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{size\PYGZus{}tt}\PYG{+w}{ }\PYG{n}{id}\PYG{p}{);}
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{registo\PYGZus{}validar\PYGZus{}data}\PYG{p}{(}\PYG{n}{Data}\PYG{+w}{ }\PYG{n}{d\PYGZus{}registo}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Data}\PYG{+w}{ }\PYG{n}{d\PYGZus{}doente}\PYG{p}{);}
+\end{Verbatim}

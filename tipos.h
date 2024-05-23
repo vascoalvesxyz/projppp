@@ -11,11 +11,13 @@ typedef struct Data {
 // Registos
 #ifndef REGISTOS_H
 #define REGISTOS_H
+
 typedef struct Registo {
   size_tt id;
   Data data; 
   double tensao_minima, tensao_maxima, peso, altura;
 } Registo;
+
 typedef struct noRegisto{
   struct Registo registo;
   struct noRegisto* prox;
@@ -29,6 +31,7 @@ typedef noRegisto* pRegisto;
 #define TAM_NOME 255
 #define TAM_CC 16
 #define DOENTES_H
+
 typedef struct Doente {
   char nome[TAM_EMAIL];
   size_tt id;
@@ -37,6 +40,7 @@ typedef struct Doente {
   Data data;       
   size_tt telefone;
 } Doente;
+
 typedef struct noDoente {
   struct Doente doente;
   struct noDoente* prox;

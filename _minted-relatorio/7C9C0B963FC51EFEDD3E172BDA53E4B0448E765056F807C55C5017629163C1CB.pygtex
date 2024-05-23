@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{limpar\PYGZus{}buffer}\PYG{p}{(}\PYG{k+kt}{FILE}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{stream}\PYG{p}{);}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{ler\PYGZus{}data}\PYG{p}{(}\PYG{n}{Data}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{data}\PYG{p}{);}
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{validar\PYGZus{}email}\PYG{p}{(}\PYG{k+kt}{char}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{input}\PYG{p}{);}
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{validar\PYGZus{}nome}\PYG{p}{(}\PYG{k+kt}{char}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{input}\PYG{p}{);}
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{validar\PYGZus{}cc}\PYG{p}{(}\PYG{k+kt}{char}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{input}\PYG{p}{);}
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{validar\PYGZus{}telefone}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{input}\PYG{p}{);}
+\end{Verbatim}

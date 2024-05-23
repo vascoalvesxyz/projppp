@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{n}{pDoente}\PYG{+w}{ }\PYG{n+nf}{doente\PYGZus{}criar}\PYG{p}{();}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{doente\PYGZus{}carregar}\PYG{p}{(}\PYG{n}{pDoente}\PYG{+w}{ }\PYG{n}{raiz}\PYG{p}{);}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{doente\PYGZus{}guardar}\PYG{p}{(}\PYG{n}{pDoente}\PYG{+w}{ }\PYG{n}{raiz}\PYG{p}{);}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{doente\PYGZus{}destroi}\PYG{p}{(}\PYG{n}{pDoente}\PYG{+w}{ }\PYG{n}{raiz}\PYG{p}{);}
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n+nf}{doente\PYGZus{}vazia}\PYG{p}{(}\PYG{n}{pDoente}\PYG{+w}{ }\PYG{n}{raiz}\PYG{p}{);}
+\PYG{n}{size\PYGZus{}tt}\PYG{+w}{ }\PYG{n+nf}{doente\PYGZus{}obter\PYGZus{}id}\PYG{p}{(}\PYG{n}{pDoente}\PYG{+w}{ }\PYG{n}{raiz}\PYG{p}{);}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{doente\PYGZus{}insere}\PYG{p}{(}\PYG{n}{pDoente}\PYG{+w}{ }\PYG{n}{raiz}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Doente}\PYG{+w}{ }\PYG{n}{doente}\PYG{p}{);}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{doente\PYGZus{}retira}\PYG{p}{(}\PYG{n}{pDoente}\PYG{+w}{ }\PYG{n}{raiz}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{size\PYGZus{}tt}\PYG{+w}{ }\PYG{n}{id}\PYG{p}{);}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{doente\PYGZus{}procura}\PYG{p}{(}\PYG{n}{pDoente}\PYG{+w}{ }\PYG{n}{raiz}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{size\PYGZus{}tt}\PYG{+w}{ }\PYG{n}{id}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{pDoente}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{anterior}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{pDoente}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{atual}\PYG{p}{);}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{doente\PYGZus{}info}\PYG{p}{(}\PYG{n}{pDoente}\PYG{+w}{ }\PYG{n}{raiz}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{size\PYGZus{}tt}\PYG{+w}{ }\PYG{n}{id}\PYG{p}{);}
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{doente\PYGZus{}listar\PYGZus{}ordem\PYGZus{}alfabetica}\PYG{p}{(}\PYG{n}{pDoente}\PYG{+w}{ }\PYG{n}{raiz}\PYG{p}{);}
+\PYG{n}{Doente}\PYG{+w}{ }\PYG{n+nf}{doente\PYGZus{}id\PYGZus{}para\PYGZus{}doente}\PYG{p}{(}\PYG{n}{pDoente}\PYG{+w}{ }\PYG{n}{raiz}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{size\PYGZus{}tt}\PYG{+w}{ }\PYG{n}{id}\PYG{p}{);}
+\end{Verbatim}

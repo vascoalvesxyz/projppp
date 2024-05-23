@@ -1,0 +1,237 @@
+% xelatex
+\documentclass[a4paper, 12pt]{article}
+\usepackage[portuguese]{babel}
+
+\usepackage{fontspec}
+\usepackage{microtype}
+
+\usepackage[dvipsnames]{xcolor}
+\usepackage{minted}
+\usepackage{DejaVuSans}
+
+\usepackage[left=3cm,right=3cm,bottom=3cm]{geometry}
+
+\usepackage{paracol}
+
+\setlength{\parskip}{1ex}%
+\setlength{\parindent}{0ex}%
+
+\title{\sffamily\huge\bfseries Relatório\\[1ex]\Large Mini-Projecto PPP}
+\author{ } 
+
+\newcommand\code[1]{\texttt{\sloppy #1}}
+
+\begin{document}
+
+\maketitle
+\begin{center}
+    \large
+\begin{tabular}{ r l }
+        Vasco Alves &(\texttt{2022228207})\\
+        Miguel Silva &(\texttt{2023221244})\\
+    \end{tabular}
+\end{center}
+
+\tableofcontents
+\newpage
+
+\section{Introdução}
+
+\subsection{Objetivo}
+
+O objectivo deste trabalho é construir uma aplicação capaz de armazenar, alterar e gerir a informação dos doentes de um médico hipotético. Esta informação inclui: nome, data de nascimento, cartão de cidadão, telefone e email. Para além desta funcionalidade deve ser capaz de armazenar os seus dados clínicos. Estes são: tensão arterial mínima, tensão arterial máxima, peso e altura. 
+
+\subsection{Funcionalidades }
+
+É necessário um menu através do qual o utilizador interage com todas as funcionalidades do programa. Estas incluem: introduzir e eliminar os dados de um novo doente, listar os doentes por ordem alfabética ou os com que têm tensões máximas acima de um determinado valor, apresentar toda a informação de um doente em especifico; e fazer um registo das tensões, do peso e da altura de um determinado doente num determinado dia.
+
+\section{Implementação do Programa}
+
+Para implementar todas as funcionalidades eficiente decidimos criar duas listas ligadas: uma para armazenar os registos e uma para os doentes. Isto permite gestão de memoria eficiente e ter várias ordenações da lista simultaneamente. As listas ligadas estão armazenadas em ficheiros de texto correspondentes (\code{doentes.txt} e \code{registos.txt}) e são atualizadas sempre que um nó é adicionado ou removido.
+
+\subsection{Estrutura de Ficheiros}
+
+\code{main.c}: é o ficheiro principal onde está declarado o comportamento do programa. Todas as funções e tipos de dados auxiliares estão declaradas em ficheiros externos.  
+
+\code{tipos.h}: todas as estruturas de dados estão declaradas neste ficheiro. Adicionalmente, estão definidas algumas funções para verificar e validar os tipos de dados quando são inseridos pelo utilizador. Os doentes e os registos têm as suas estruturas de dados correspondentes declaradas neste ficheiro. 
+
+\code{tipos.c}: este ficheiro contém a definição das funções que validam os dados inseridos pelo utilizador.
+
+
+\code{doente.h}: declara todas as funções que manipulam a lista ligada correspondente à informação dos doentes incluindo as funções responsáveis por atualizar e guardar a informação dos doentes em ficheiro.
+
+\code{registo.h}: faz o equivalente a \code{doente.h} para a lista ligada dos registos. 
+
+Por fim, \code{registo.c} e \code{doente.c} contém as definições das funções dos respectivos \textit{header files}.
+
+\subsection{Estruturas de Dados}
+
+\subsection*{\code{> tipos.h}}
+
+
+\begin{minted}[mathescape]{c}
+typedef struct unsigned int size_tt;
+\end{minted}
+\vspace{-1em}
+
+\begin{paracol}{2}
+    \code{size\_tt}: é um \textit{alias} de \code{unsigned int}. É utilizado em outros \textit{header files} quando queremos armazenar um numero inteiro positivo, por exemplo, no id e número de telefone do doente.
+
+    \code{struct Data}: estrutura de dados que guarda o ano, mês e dia correspondentes a uma data. É validada através da função\\ \code{ler\_data}.
+
+    \code{struct Doente}: contém todos os dados respectivos ao doente. As principais funções do programa dependem desta estrutura de dados.
+
+    \code{struct noDoente}: nó da lista ligada respectiva. Têm dois \code{pointers}, um para ordem crescente por id e outro para ordem alfabética.
+
+
+
+    \switchcolumn
+
+    \vspace{-1em}
+\begin{minted}[mathescape]{c}
+typedef struct Data {
+  int dia, mes, ano;
+} Data;
+
+typedef struct Doente {
+  char nome[TAM_EMAIL];
+  size_tt id;
+  char email[TAM_EMAIL];
+  char cc[TAM_CC];
+  Data data;       
+  size_tt telefone;
+} Doente;
+
+typedef struct noDoente {
+    struct Doente doente;
+    struct noDoente* prox;
+    struct noDoente* prox_alfabetica;
+} noDoente ;
+
+
+\end{minted}
+\end{paracol}
+\vspace{-3em}
+
+\begin{paracol}{2}
+    \code{struct Registo}: contém todos os dados respectivos a um registo de um doente. Cada registo contém o id do doente a quem pertence. Pode haver id repetido, o que não é o caso para doentes e permite um doente ter vários registos mas não o contrario. 
+
+    \code{struct noRegisto}: nó da lista ligada respectiva. 
+
+
+
+    \switchcolumn
+
+    \vspace{-1em}
+\begin{minted}[mathescape]{c}
+typedef struct Registo {
+  size_tt id;
+  Data data; 
+  double tensao_minima, tensao_maxima;
+  double peso, altura;
+} Registo;
+
+typedef struct noRegisto{
+  struct Registo registo;
+  struct noRegisto* prox;
+} noRegisto;
+\end{minted}
+
+\end{paracol}
+
+
+\subsection{Funções}
+
+\subsection*{\code{> tipos.h}}
+\begin{minted}[mathescape]{c}
+void limpar_buffer(FILE *stream);
+void ler_data(Data *data);
+int validar_email(char *input);
+int validar_nome(char *input);
+int validar_cc(char *input);
+int validar_telefone(int input);
+\end{minted}
+
+\code{limpar\_buffer(stdin)} garante que não existe caracteres que ``sobram'' (como o \code{newline}) depois do utilizador inserir os dados, evitando errors de inserção. As restantes funções são responsáveis por validar os dados associados com \code{struct Doente} quando são pedidos ao utilizador.
+
+\subsection*{\code{> doente.h}}
+
+\begin{minted}[mathescape]{c}
+pDoente doente_criar();
+void doente_carregar(pDoente raiz);
+void doente_guardar(pDoente raiz);
+void doente_destroi(pDoente raiz);
+int doente_vazia(pDoente raiz);
+size_tt doente_obter_id(pDoente raiz);
+void doente_insere(pDoente raiz, Doente doente);
+void doente_retira(pDoente raiz, size_tt id);
+void doente_procura(pDoente raiz, size_tt id, pDoente *anterior, pDoente *atual);
+void doente_info(pDoente raiz, size_tt id);
+void doente_listar_ordem_alfabetica(pDoente raiz); 
+Doente doente_id_para_doente(pDoente raiz, size_tt id);
+\end{minted}
+
+\code{doente\_criar}: cria o primeiro nó da lista ligada, a ``raiz'', e retorna o seu endereço.\\
+\code{doente\_carregar}: lê os dados guardados em \code{doentes.txt} e insere-os na lista ligada.\\
+\code{doente\_guardar}: guarda todos doentes da lista ligada em \code{doentes.txt}.
+\code{doente\_destroi}: destroi a lista ligada e liberta toda a memoria que lhe foi alocada.\\
+\code{doente\_vazia}: devolve 1 se o endereço para o próximo nó da fila for nulo e 0 se for o contrário. 
+
+\code{doente\_obter\_id}: soma 1 ao maior id da lista ligada evitando que haja ids reutilizados. Parte da funcionalidade do programa afirma que quando as informações de um doente são apagadas o seu id não volta a estar disponível para doentes futuros. O maior id da lista ligada está sempre armazenado no nó raiz. 
+
+\code{doente\_insere}: insere um novo nó na lista ligada na posição certa de acordo com a ordenação por ids e de acordo com a ordem alfabética.
+
+\code{doente\_retira}: retira um doente da lista ligada e liberta a sua memoria.\\
+\code{doente\_procura}: procura o endereço do nó anterior por ordem crescente de ids.\\
+\code{doente\_procura\_alfabeticamente}: procura o endereço do nó anterior por ordem alfabética. \\
+\code{doente\_info}: imprime na consola a informação de o doente correspondente ao id dado como argumento.\\
+\code{doente\_listar\_ordem\_alfabetica}: imprime na consola todos os doentes por ordem alfabética.\\
+\code{doente\_id\_para\_doente}: devolve um \code{struct Doente} com a informação correspondente ao id pedido.
+
+\subsection*{\code{> registo.h}}
+
+\begin{minted}[mathescape, linenos]{c}
+pRegisto registo_criar(); 
+void registo_carregar(pRegisto raiz);
+void registo_guardar(pRegisto raiz);
+void registo_destroi(pRegisto raiz); 
+int registo_vazia(pRegisto raiz); 
+void registo_insere(pRegisto raiz, Registo registo); 
+void registo_retira(pRegisto raiz, size_tt id);
+
+void registo_procura(pRegisto raiz, int chave, pRegisto *anterior, pRegisto *atual);
+void registo_procura_id(pRegisto raiz, size_tt id, pRegisto *anterior, pRegisto *atual);
+void registo_listar_tensoes_max(pDoente raiz_doente, pRegisto raiz, int n); 
+void registo_listar_doente(pRegisto raiz, size_tt id);
+int registo_validar_data(Data d_registo, Data d_doente);
+\end{minted}
+
+Ás primeiras 7 funções são equivalentes às anteriores mas adaptadas para o \code{struct Registo}.
+
+
+\code{registo\_procura}:
+Procura um registo de saúde com a tensão arterial especificada \code{tensao\_maxima}. Define \code{anterior} para o endereço do nó anterior ao nó encontrado e \code{atual} para o nó encontrado.
+
+\code{registo\_procura\_id}:
+Faz o equivalente à função anterior para o ID especificado. 
+
+\code{registo\_listar\_tensoes\_max:} 
+Lista todos os registos de saúde com uma tensão arterial (\texttt{tensao\_maxima}) maior ou igual a \texttt{n}, exibindo o nome do paciente e a tensão arterial.
+
+\code{registo\_listar\_doente}:
+Lista todos os registos de saúde de um paciente com o ID especificado, exibindo a data, peso, altura e tensão arterial.
+
+\code{registo\_validar\_data}: 
+Valida se a data do registo de saúde é igual ou posterior à data especificada do paciente.
+
+%\subsection{\tt main}
+
+\section{Conclusão}
+Com este projeto desenvolvemos uma aplicação capaz de gerir eficazmente os dados dos doentes e os seus registos clínicos. Usando listas ligadas organizamos a informação de forma eficiente. A validação dos dados inseridos garante que não haja error desnecessário. Ao guardar os dados em ficheiros de texto garantiu que a informação não é perdida quando a aplicação é encerrada.
+
+Foram aplicados vários conceitos como estruturas de dados, alocação dinâmica de memória e escrita e leitura de ficheiros em C. A divisão do código em múltiplos header files manteve o código organizado e mais fácil de manter.
+
+No futuro, a aplicação pode ser expandida com novas funcionalidades, como por exemplo a integração de uma interface gráfica os dados sensíveis dos doentes.
+
+\end{document}
+
